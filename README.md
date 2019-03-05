@@ -15,6 +15,6 @@ A simple battery level notifier
 - modify the timer period if you wish
 - enable and start the service
     ```
-    systemctl --user enable batter-notify
-    systemctl --user start batter-notify
+    systemctl --user enable battery-notify
+    systemctl --user start battery-notify
     ```
