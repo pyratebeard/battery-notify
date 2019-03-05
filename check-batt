@@ -5,7 +5,7 @@ BATTPERC=$(cat /sys/class/power_supply/BAT0/capacity)
 notify() {
     level=$1
     msg=$2
-    DISPLAY=:0 /usr/bin/dunstify -u "$level" "POWER" "$msg"
+    DISPLAY=:0 /usr/bin/notify-send -u "$level" "POWER" "$msg"
 }
 
 if [[ $BATTPERC == 50 ]] ; then
