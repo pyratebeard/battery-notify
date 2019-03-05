@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+BATTPERC=$(cat /sys/class/power_supply/BAT0/capacity)
+
+notify() {
+    level=$1
+    msg=$2
+    DISPLAY=:0 /usr/bin/dunstify -u "$level" "POWER" "$msg"
+}
+
+if [[ $BATTPERC == 50 ]] ; then
+    notify "low" "battery is at 50%"
+elif [[ $BATTPERC == 30 ]] ; then
+    notify "normal" "battery is at 30%"
+elif [[ "$BATTPERC | sed -e :a -e 's/^.\{1\}$/0&/;ta'" < 10 ]] ; then
+    notify "critical" "battery is less than 10%"
+fi
