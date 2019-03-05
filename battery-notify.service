@@ -1,0 +1,8 @@
+[Unit]
+Description=battery-notify
+
+[Service]
+ExecStart=%h/bin/check-batt
+
+[Install]
+WantedBy=default.target
