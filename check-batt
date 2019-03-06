@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+BATTSTATUS=$(cat /sys/class/power_supply/BAT0/status)
 BATTPERC=$(cat /sys/class/power_supply/BAT0/capacity)
 
 notify() {
@@ -7,6 +8,10 @@ notify() {
     msg=$2
     DISPLAY=:0 /usr/bin/notify-send -u "$level" "POWER" "$msg"
 }
+
+if [[ $BATTSTATUS != 'Discharging' ]] ; then
+    exit 0
+fi
 
 if [[ $BATTPERC == 50 ]] ; then
     notify "low" "battery is at 50%"
