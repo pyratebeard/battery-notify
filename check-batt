@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
-BAT_NUM='1'
+BAT_NUM='0'
 STATUS_FILE=/tmp/check-bat.tmp
 BATTPERC=$(cat /sys/class/power_supply/BAT${BAT_NUM}/capacity)
 BATTSTATUS=$(cat /sys/class/power_supply/BAT${BAT_NUM}/status)
 LAST_STATUS=''
 LAST_NOTIF_LEVEL=0
 NOTIF_LEVEL=0
+CHECK="N"
 
 if [ -e $STATUS_FILE ] ; then
 	. $STATUS_FILE
@@ -23,6 +24,17 @@ notify() {
 	msg=$2
 	DISPLAY=:0 /usr/bin/notify-send -t 3500 -u "$level" "POWER" "$msg"
 }
+
+while getopts "c" arg ; do
+	case "$arg" in
+		c) CHECK="Y" ;;
+	esac
+done
+
+if [[ "$CHECK" == "Y" ]] ; then
+	notify "normal" "battery is now $BATTSTATUS, Capacity: $BATTPERC"
+	exit
+fi
 
 # Battery status changed
 if [[ "$BATTSTATUS" != "$LAST_STATUS" ]] ; then

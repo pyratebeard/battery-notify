@@ -15,3 +15,8 @@ A simple battery level notifier
     systemctl --user enable battery-notify
     systemctl --user start battery-notify
     ```
+
+You can show the current battery status by passing the `-c` flag
+```
+check-batt -c
+```
